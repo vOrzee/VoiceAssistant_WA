@@ -8,10 +8,12 @@
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
+        android:background="?colorPrimary"
         app:title="@string/app_name"
         app:titleTextColor="?colorOnPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:menu="@menu/toolbar_menu"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
