@@ -3,6 +3,7 @@
     <string name="action_stop">Стоп</string>
     <string name="action_clear">Очистить</string>
     <string name="request_hint">Что Вас интересует?</string>
+    <string name="text_hint">Пишите здесь</string>
     <string name="error_do_not_understand">Извините, я не понимаю, можете перефразировать?</string>
     <string name="error_voice_recognition_unavailable">Распознавание голоса недоступно</string>
     <string name="error_something_went_wrong">Что-то пошло не так</string>
