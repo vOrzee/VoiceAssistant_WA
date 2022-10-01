@@ -1,13 +1,16 @@
 package ru.netology.voiceassistant_wa
 
+import android.app.Activity
 import android.content.AbstractThreadedSyncAdapter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ListView
 import android.widget.SimpleAdapter
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 
 class MainActivity : AppCompatActivity() {
@@ -59,7 +62,19 @@ class MainActivity : AppCompatActivity() {
             intArrayOf(R.id.title, R.id.content)
         )
         podsList.adapter = podsAdapter
+        val voiceInputButton: FloatingActionButton = findViewById(R.id.voice_input_button)
+        var count = 5
+        voiceInputButton.setOnClickListener {
 
+            Log.d(TAG,"Click on floating button")
+            pods.add(
+                HashMap<String, String>().apply {
+                    put("Title", "Title $count")
+                    put("Content", "Content ${count++}")
+                }
+            )
+            podsList.adapter = podsAdapter
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
