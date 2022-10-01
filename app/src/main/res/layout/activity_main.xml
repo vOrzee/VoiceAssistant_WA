@@ -8,12 +8,31 @@
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
-        android:background="?colorPrimary"
-        app:title="@string/app_name"
-        app:titleTextColor="?colorOnPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?colorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/toolbar_menu"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:title="@string/app_name"
+        app:titleTextColor="?colorOnPrimary" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_input_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_margin="8dp"
+        android:hint="@string/request_hint"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
+            android:id="@+id/text_input_edit"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
