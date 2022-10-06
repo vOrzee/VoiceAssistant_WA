@@ -2,11 +2,11 @@ package ru.netology.voiceassistant_wa
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Message
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.ListView
 import android.widget.ProgressBar
 import android.widget.SimpleAdapter
@@ -47,6 +47,17 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         requestInput = findViewById(R.id.text_input_edit)
+        requestInput.setOnEditorActionListener { _, actionId, _ ->
+            if(actionId == EditorInfo.IME_ACTION_DONE) {
+                pods.clear()
+                podsAdapter.notifyDataSetChanged()
+
+                val question = requestInput.text.toString()
+                askWolfram(question)
+            }
+
+            return@setOnEditorActionListener false
+        }
 
         val podsList: ListView = findViewById(R.id.pods_list)
         podsAdapter = SimpleAdapter(
@@ -67,7 +78,7 @@ class MainActivity : AppCompatActivity() {
                     put("Content", "Content ${pods.size + 1}")
                 }
             )
-            podsList.adapter = podsAdapter
+            podsAdapter.notifyDataSetChanged()
         }
 
         progressBar = findViewById(R.id.progress_bar)
@@ -85,7 +96,8 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.action_clear -> {
                 pods.clear()
-                initViews()
+                podsAdapter.notifyDataSetChanged()
+                requestInput.text?.clear()
                 return true
             }
         }
