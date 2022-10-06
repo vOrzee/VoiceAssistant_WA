@@ -76,6 +76,13 @@ class MainActivity : AppCompatActivity() {
             intArrayOf(R.id.title, R.id.content)
         )
         podsList.adapter = podsAdapter
+        podsList.setOnItemClickListener { parent, view, position, id ->
+            if (isTtsReady) {
+                val title = pods[position]["Title"]
+                val content = pods[position]["Content"]
+                textToSpeech.speak(content, TextToSpeech.QUEUE_FLUSH, null, title)
+            }
+        }
         val voiceInputButton: FloatingActionButton = findViewById(R.id.voice_input_button)
         voiceInputButton.setOnClickListener {
 
