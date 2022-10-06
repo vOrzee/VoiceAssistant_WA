@@ -2,6 +2,7 @@ package ru.netology.voiceassistant_wa
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -20,6 +21,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
+import kotlin.collections.HashMap
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,9 +38,14 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var waEngine: WAEngine
 
+    lateinit var textToSpeech: TextToSpeech
+
+    var isTtsReady = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        initTts()
         initViews()
         initWolframEngine()
     }
@@ -161,6 +169,18 @@ class MainActivity : AppCompatActivity() {
                     showSnackbar(t.message ?: getString(R.string.error_something_went_wrong))
                 }
             }
+        }
+    }
+
+    fun initTts(){
+        textToSpeech = TextToSpeech(this) { code ->
+            if(code != TextToSpeech.SUCCESS){
+                showSnackbar(getString(R.string.error_tts_is_not_ready) + ". Error code: $code")
+            } else {
+                isTtsReady = true
+                textToSpeech.language = Locale.US
+            }
+
         }
     }
 }
