@@ -42,6 +42,8 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var textToSpeech: TextToSpeech
 
+    val VOICE_RECOGNITION_REQUEST_CODE = 734
+
     var isTtsReady = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -197,4 +199,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun showVoiceInputDialog(){
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+            putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.request_hint))
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.US)
+        }
+        runCatching {
+            startActivityForResult(intent,VOICE_RECOGNITION_REQUEST_CODE)
+        }.onFailure { t ->
+            showSnackbar(t.message ?: getString(R.string.error_voice_recognition_unavailable))
+        }
+    }
 }
