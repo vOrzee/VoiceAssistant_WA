@@ -75,6 +75,8 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
             R.id.action_clear -> {
+                pods.clear()
+                initViews()
                 return true
             }
         }
