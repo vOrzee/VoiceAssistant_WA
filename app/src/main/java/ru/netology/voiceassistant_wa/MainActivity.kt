@@ -107,6 +107,9 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_stop -> {
+                if (isTtsReady){
+                    textToSpeech.stop()
+                }
                 return true
             }
             R.id.action_clear -> {
