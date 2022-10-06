@@ -2,6 +2,7 @@ package ru.netology.voiceassistant_wa
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Message
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -10,7 +11,9 @@ import android.widget.ProgressBar
 import android.widget.SimpleAdapter
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import com.wolfram.alpha.WAEngine
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,15 +25,15 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var progressBar: ProgressBar
 
-    val pods = mutableListOf<HashMap<String, String>>(
+    val pods = mutableListOf<HashMap<String, String>>()
 
-    )
+    lateinit var waEngine: WAEngine
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         initViews()
+        initWolframEngine()
     }
 
     fun initViews() {
@@ -81,5 +84,21 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    fun initWolframEngine(){
+        waEngine = WAEngine().apply {
+            appID = "Y7VJAU-L48TAHRGTH"
+            addFormat("plaintext")
+        }
+    }
+
+    fun showSnackbar(message: String){
+        Snackbar.make(findViewById(android.R.id.content),message,Snackbar.LENGTH_INDEFINITE).apply {
+            setAction(android.R.string.ok) {
+                dismiss()
+            }
+            show()
+        }
     }
 }
