@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.tts.TextToSpeech
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -27,8 +26,6 @@ import java.util.*
 import kotlin.collections.HashMap
 
 class MainActivity : AppCompatActivity() {
-
-    val TAG: String = "MainActivity"
 
     lateinit var requestInput: TextInputEditText
 
@@ -89,15 +86,13 @@ class MainActivity : AppCompatActivity() {
         }
         val voiceInputButton: FloatingActionButton = findViewById(R.id.voice_input_button)
         voiceInputButton.setOnClickListener {
-
-            Log.d(TAG, "Click on floating button")
-            pods.add(
-                HashMap<String, String>().apply {
-                    put("Title", "Title ${pods.size + 1}")
-                    put("Content", "Content ${pods.size + 1}")
-                }
-            )
+            pods.clear()
             podsAdapter.notifyDataSetChanged()
+            if(isTtsReady) {
+                textToSpeech.stop()
+            }
+
+            showVoiceInputDialog()
         }
 
         progressBar = findViewById(R.id.progress_bar)
