@@ -211,4 +211,14 @@ class MainActivity : AppCompatActivity() {
             showSnackbar(t.message ?: getString(R.string.error_voice_recognition_unavailable))
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == VOICE_RECOGNITION_REQUEST_CODE) {
+            data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)?.get(0)?.let { question ->
+                requestInput.setText(question)
+                askWolfram(question)
+            }
+        }
+    }
 }
